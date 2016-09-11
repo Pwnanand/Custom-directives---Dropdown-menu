@@ -1,10 +1,22 @@
-
 (function (window, angular) {
   'use strict';
 
   var dd = angular.module('ngDropdowns', []);
 
   dd.run(['$templateCache', function ($templateCache) {
+    $templateCache.put('ngDropdowns/templates/dropdownSelect.html', [
+      '<div ng-class="{\'disabled\': dropdownDisabled}" class="wrap-dd-select" tabindex="0">',
+      '<span class="selected">{{dropdownModel[labelField]}}</span>',
+      '<ul class="dropdown">',
+      '<li ng-repeat="item in dropdownSelect"',
+      ' class="dropdown-item"',
+      ' dropdown-select-item="item"',
+      ' dropdown-item-label="labelField">',
+      '</li>',
+      '</ul>',
+      '</div>'
+    ].join(''));
+
     $templateCache.put('ngDropdowns/templates/dropdownSelectItem.html', [
       '<li ng-class="{divider: (dropdownSelectItem.divider && !dropdownSelectItem[dropdownItemLabel]), \'divider-label\': (dropdownSelectItem.divider && dropdownSelectItem[dropdownItemLabel])}">',
       '<a href="" class="dropdown-item"',
@@ -23,13 +35,28 @@
       '<ul class="dropdown">',
       '<li ng-repeat="item in dropdownMenu"',
       ' class="dropdown-item"',
-      <span ng-if="dropdownMenu.divider">',
       ' dropdown-item-label="labelField"',
       ' dropdown-menu-item="item">',
       '</li>',
       '</ul>'
+    ].join(''));
 
+    $templateCache.put('ngDropdowns/templates/dropdownMenuItem.html', [
+      '<li ng-class="{divider: dropdownMenuItem.divider, \'divider-label\': dropdownMenuItem.divider && dropdownMenuItem[dropdownItemLabel]}">',
+      '<a href="" class="dropdown-item"',
+      ' ng-if="!dropdownMenuItem.divider"',
+      ' ng-href="{{dropdownMenuItem.href}}"',
+      ' ng-click="selectItem()">',
+      '{{dropdownMenuItem[dropdownItemLabel]}}',
+      '</a>',
+      '<span ng-if="dropdownMenuItem.divider">',
+      '{{dropdownMenuItem[dropdownItemLabel]}}',
+      '</span>',
+      '</li>'
+    ].join(''));
 
+    $templateCache.put('ngDropdowns/templates/dropdownMenuWrap.html',
+      '<div class="wrap-dd-menu" ng-class="{\'disabled\': dropdownDisabled}"></div>'
     );
   }]);
 
